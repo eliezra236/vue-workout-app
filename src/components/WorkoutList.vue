@@ -25,10 +25,21 @@ import WorkoutItem from './WorkoutItem.vue';
 import IWorkoutItemProps from '@/types/IWorkoutItemProps';
 import IExerciseItemProps from '@/types/IExerciseItemProps';
 
+const LOCAL_STORAGE_KEY = 'workoutApp.workouts';
+
 const defaultWorkouts: IWorkoutItemProps[] = [
   { exercises: [{ name: 'Lift', isCompleted: false }, { name: 'Drop', isCompleted: false }], name: 'Legs', isCompleted: false },
   { exercises: [{ name: 'Lift', isCompleted: false }, { name: 'Drop', isCompleted: false }], name: 'Chest', isCompleted: false },
 ];
+
+const getInitialWorkouts = () : IWorkoutItemProps[] => {
+  // checks if there is workouts saved in localstorage, returns the default values if not.
+  const storedWorkouts = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+  if (storedWorkouts) {
+    return storedWorkouts;
+  }
+  return defaultWorkouts;
+};
 
 export default defineComponent({
   name: 'WorkoutList',
@@ -36,8 +47,17 @@ export default defineComponent({
     return {
       name: 'Eli',
       newWorkout: '',
-      workouts: defaultWorkouts as IWorkoutItemProps[],
+      workouts: getInitialWorkouts(),
     };
+  },
+  watch: {
+    workouts: {
+      handler(newWorkouts) {
+        // saves the workouts to local storage whenever there's a change
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newWorkouts));
+      },
+      deep: true,
+    },
   },
   components: { WorkoutItem },
   methods: {
