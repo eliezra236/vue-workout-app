@@ -10,6 +10,8 @@
         :exercises="workout.exercises"
         @new-exercise="addExercise"
         @change-exercise-status="changeExerciseStatus"
+        @delete-exercise="deleteExercise"
+        @delete-workout="deleteWorkout"
       />
     </el-collapse>
     <el-input v-model="newWorkout" placeholder="Add Workout" clearable />
@@ -18,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
+import { defineComponent } from 'vue';
 import WorkoutItem from './WorkoutItem.vue';
 import IWorkoutItemProps from '@/types/IWorkoutItemProps';
 import IExerciseItemProps from '@/types/IExerciseItemProps';
@@ -44,8 +46,12 @@ export default defineComponent({
         isCompleted: true, exercises: [], name: this.newWorkout,
       };
       this.workouts.push(newWorkoutInstance);
+      this.newWorkout = '';
     },
-    addExercise(workoutIndex: number, newExercise: IWorkoutItemProps) {
+    deleteWorkout(workoutIndex: number) {
+      this.workouts.splice(workoutIndex, 1);
+    },
+    addExercise(workoutIndex: number, newExercise: IWorkoutItemProps): void {
       this.workouts[workoutIndex].exercises.push(newExercise);
     },
     changeExerciseStatus(newValue: boolean, exerciseIndex: number, workoutIndex: number): void {
@@ -54,11 +60,15 @@ export default defineComponent({
       exercise.isCompleted = newValue;
       this.updateWorkoutStatus(workout);
     },
-    updateWorkoutStatus(workout: IWorkoutItemProps) {
+    deleteExercise(exerciseIndex: number, workoutIndex: number) {
+      const workout: IWorkoutItemProps = this.workouts[workoutIndex];
+      workout.exercises.splice(exerciseIndex, 1);
+    },
+    updateWorkoutStatus(workout: IWorkoutItemProps): void {
       workout.isCompleted = this.isWorkoutCompleted(workout);
     },
     isWorkoutCompleted(workout: IWorkoutItemProps): boolean {
-      for (let exercise of workout.exercises) {
+      for (const exercise of workout.exercises) {
         if (!exercise.isCompleted) {
           return false;
         }

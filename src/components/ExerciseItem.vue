@@ -1,5 +1,8 @@
 <template>
+  <li>
     <el-checkbox :label="name" :checked="isCompleted" @change="changeCompleted"></el-checkbox>
+    <a href="#" @click="deleteExercise">x</a>
+  </li>
 </template>
 
 <script lang="ts">
@@ -26,6 +29,9 @@ export default defineComponent({
     changeCompleted(cbValue) {
       this.$emit('change-status', cbValue, this.index);
     },
+    deleteExercise() {
+      this.$emit('delete-exercise', this.index);
+    },
   },
 });
 </script>
@@ -33,6 +39,6 @@ export default defineComponent({
 <style scoped>
 .el-checkbox {
   text-align: left;
-  display: block;
+  margin-right: 1rem;
 }
 </style>
