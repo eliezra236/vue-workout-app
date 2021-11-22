@@ -26,6 +26,8 @@
       </el-form-item>
     </el-form>
 
+    <a href="#" id="reset-to-default-btn" @click="resetToDefault">Delete All Workouts (Reset to Default)</a>
+
   </div>
 </template>
 
@@ -38,8 +40,12 @@ import IExerciseItemProps from '@/types/IExerciseItemProps';
 const LOCAL_STORAGE_KEY = 'workoutApp.workouts';
 
 const defaultWorkouts: IWorkoutItemProps[] = [
-  { exercises: [{ name: 'Lift', isCompleted: false }, { name: 'Drop', isCompleted: false }], name: 'Legs', isCompleted: false },
-  { exercises: [{ name: 'Lift', isCompleted: false }, { name: 'Drop', isCompleted: false }], name: 'Chest', isCompleted: false },
+  { name: 'Click Here For Toturial', isCompleted: false, exercises: [
+    { name: '<-- Mark as Completed', isCompleted: false },
+      { name: 'Delete Exercise -->', isCompleted: false },
+      { name: 'Easy, right?', isCompleted: false },
+      { name: 'Mark Everything as Completed', isCompleted: false },
+      { name: 'You Completed The Tuturial, have fun :)', isCompleted: false }]},
 ];
 
 const getInitialWorkouts = () : IWorkoutItemProps[] => {
@@ -76,7 +82,7 @@ export default defineComponent({
         return;
       }
       const newWorkoutInstance: IWorkoutItemProps = {
-        isCompleted: true, exercises: [], name: this.newWorkout,
+        isCompleted: false, exercises: [], name: this.newWorkout,
       };
       this.workouts.push(newWorkoutInstance);
       this.newWorkout = '';
@@ -101,12 +107,21 @@ export default defineComponent({
       workout.isCompleted = this.isWorkoutCompleted(workout);
     },
     isWorkoutCompleted(workout: IWorkoutItemProps): boolean {
+      if (workout.exercises.length === 0) {
+        return false;
+      }
       for (const exercise of workout.exercises) {
         if (!exercise.isCompleted) {
           return false;
         }
       }
       return true;
+    },
+    resetToDefault() {
+      const sure = confirm('Are you sure you want to delete all exercises? this action is irreversible');
+      if (sure) {
+        this.workouts = defaultWorkouts;
+      }
     },
   },
 });
@@ -121,6 +136,10 @@ export default defineComponent({
 #workout-list-div {
   width: 30rem;
   margin: auto;
+}
+
+#reset-to-default-btn {
+  font-size: 0.8rem;
 }
 </style>
 
