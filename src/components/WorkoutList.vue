@@ -1,6 +1,5 @@
 <template>
   <div id="workout-list-div">
-    <h3>{{ name }} Workouts</h3>
 
     <el-collapse>
       <ul class="workout-list styleless-ul">
@@ -10,6 +9,7 @@
         :index="index"
         :name="workout.name"
         :exercises="workout.exercises"
+        :isCompleted="workout.isCompleted"
         @new-exercise="addExercise"
         @change-exercise-status="changeExerciseStatus"
         @delete-exercise="deleteExercise"
@@ -17,15 +17,14 @@
       />
       </ul>
     </el-collapse>
-    <el-form @submit.prevent="addWorkout">
+    <el-form id="new-workout-form" @submit.prevent="addWorkout" class="flex-input">
       <el-form-item>
-        <el-input v-model="newWorkout" placeholder="Add Workout" clearable />
+        <el-input v-model="newWorkout" type="text" placeholder="Add Workout" />
       </el-form-item>
       <el-form-item>
-        <el-button type="danger" @click="addWorkout">+</el-button>
+        <el-button type="success" @click="addWorkout">+</el-button>
       </el-form-item>
     </el-form>
-
 
   </div>
 </template>
@@ -56,7 +55,6 @@ export default defineComponent({
   name: 'WorkoutList',
   data() {
     return {
-      name: 'Eli',
       newWorkout: '',
       workouts: getInitialWorkouts(),
     };
@@ -73,6 +71,10 @@ export default defineComponent({
   components: { WorkoutItem },
   methods: {
     addWorkout() {
+      if (this.newWorkout === '') {
+        alert("Cannot add empty workout");
+        return;
+      }
       const newWorkoutInstance: IWorkoutItemProps = {
         isCompleted: true, exercises: [], name: this.newWorkout,
       };
@@ -111,6 +113,11 @@ export default defineComponent({
 </script>
 
 <style scoped>
+
+.el-input {
+  width: 20rem;
+}
+
 #workout-list-div {
   width: 30rem;
   margin: auto;

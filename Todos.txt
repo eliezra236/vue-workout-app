@@ -1,4 +1,1 @@
 TODO: Write unit test.
-TODO: Make the inputs flex items.
-TODO: Change the remove button and make it more appealing.
-TODO: Add validation to forms.

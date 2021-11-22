@@ -1,7 +1,7 @@
 <template>
   <li>
     <el-checkbox :label="name" :checked="isCompleted" @change="changeCompleted"></el-checkbox>
-    <a href="#" @click="deleteExercise">x</a>
+    <el-button class="delete-exercise-btn" @click="deleteExercise" type="danger" size="mini" :icon="Delete" circle></el-button>
   </li>
 </template>
 
@@ -35,8 +35,14 @@ export default defineComponent({
   },
 });
 </script>
+<script setup lang="ts">
+import { Delete } from '@element-plus/icons';
+
+</script>
 
 <style scoped>
+.delete-exercise-btn {
+}
 .el-checkbox {
   text-align: left;
   margin-right: 1rem;

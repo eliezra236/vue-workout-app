@@ -1,6 +1,11 @@
 <template>
   <li>
-  <el-collapse-item :title="name" class="workout-item">
+  <el-collapse-item class="workout-item">
+    <template #title>
+      <div :class="[{completed: isCompleted}]">
+        {{ name }}
+      </div>
+    </template>
     <ul class="exercise-list styleless-ul">
       <ExerciseItem
         v-for="(exercsie, index) in exercises"
@@ -12,7 +17,7 @@
         @delete-exercise="deleteExercise"
       />
     </ul>
-    <el-form @submit.prevent="addExercise">
+    <el-form @submit.prevent="addExercise" class="flex-input">
       <el-form-item>
         <el-input v-model="newExercise" placeholder="Add Exercise" clearable />
       </el-form-item>
@@ -20,9 +25,6 @@
         <el-button type="primary" @click="addExercise">+</el-button>
       </el-form-item>
     </el-form>
-
-
-    <br/>
     <a class="delete-link" href="#" @click="deleteWorkout">delete workout</a>
   </el-collapse-item>
   </li>
@@ -50,6 +52,10 @@ export default defineComponent({
       required: false,
       default: [] as IExerciseItemProps[],
     },
+    isCompleted: {
+      type: Boolean,
+      required: true,
+    },
   },
   data() {
     return {
@@ -59,7 +65,8 @@ export default defineComponent({
   methods: {
     addExercise() {
       if (this.newExercise === '') {
-        alert("cannot add empty workout")
+        alert('Cannot add empty exercise');
+        return;
       }
       const newExerciseInstance: IExerciseItemProps = {
         name: this.newExercise,
@@ -87,7 +94,13 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.el-input {
+  width: 20rem;
+}
 
+.completed {
+  text-decoration: line-through;
+}
 .workout-item {
   text-align: left;
 }
@@ -97,9 +110,5 @@ export default defineComponent({
   display: inline-block;
   text-align: left !important;
   width: initial;
-}
-.el-input {
-  display: inline-block;
-  width: 40%;
 }
 </style>
