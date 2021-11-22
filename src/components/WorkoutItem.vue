@@ -1,6 +1,7 @@
 <template>
+  <li>
   <el-collapse-item :title="name" class="workout-item">
-    <ul class="exercise-list">
+    <ul class="exercise-list styleless-ul">
       <ExerciseItem
         v-for="(exercsie, index) in exercises"
         :key="index"
@@ -11,11 +12,20 @@
         @delete-exercise="deleteExercise"
       />
     </ul>
-    <el-input v-model="newExercise" placeholder="Add Exercise" clearable />
-    <el-button type="primary" @click="addExercise">+</el-button>
+    <el-form @submit.prevent="addExercise">
+      <el-form-item>
+        <el-input v-model="newExercise" placeholder="Add Exercise" clearable />
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="addExercise">+</el-button>
+      </el-form-item>
+    </el-form>
+
+
     <br/>
     <a class="delete-link" href="#" @click="deleteWorkout">delete workout</a>
   </el-collapse-item>
+  </li>
 
 </template>
 
@@ -48,6 +58,9 @@ export default defineComponent({
   },
   methods: {
     addExercise() {
+      if (this.newExercise === '') {
+        alert("cannot add empty workout")
+      }
       const newExerciseInstance: IExerciseItemProps = {
         name: this.newExercise,
         isCompleted: false,
@@ -64,7 +77,7 @@ export default defineComponent({
     },
     deleteWorkout() {
       this.$emit('delete-workout', this.index);
-      console.log("here");
+      console.log('here');
     },
   },
   components: {
@@ -74,12 +87,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
-.exercise-list {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
 
 .workout-item {
   text-align: left;

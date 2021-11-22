@@ -1,7 +1,9 @@
 <template>
-  <div id="workout-list">
+  <div id="workout-list-div">
     <h3>{{ name }} Workouts</h3>
+
     <el-collapse>
+      <ul class="workout-list styleless-ul">
       <workout-item
         v-for="(workout, index) in workouts"
         :key="index"
@@ -13,9 +15,18 @@
         @delete-exercise="deleteExercise"
         @delete-workout="deleteWorkout"
       />
+      </ul>
     </el-collapse>
-    <el-input v-model="newWorkout" placeholder="Add Workout" clearable />
-    <el-button type="danger" @click="addWorkout">+</el-button>
+    <el-form @submit.prevent="addWorkout">
+      <el-form-item>
+        <el-input v-model="newWorkout" placeholder="Add Workout" clearable />
+      </el-form-item>
+      <el-form-item>
+        <el-button type="danger" @click="addWorkout">+</el-button>
+      </el-form-item>
+    </el-form>
+
+
   </div>
 </template>
 
@@ -100,7 +111,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-#workout-list {
+#workout-list-div {
   width: 30rem;
   margin: auto;
 }
