@@ -33,24 +33,36 @@ describe('testItem.vue', () => {
 });
 
 describe('WorkoutList.vue', () => {
-  it('Adds a new workout', async () => {
-    const msg = 'hello world';
-    const wrapper = mount(WorkoutList, {
-      global: {
-        plugins: [ElementPlus],
-      },
-    });
-    const newWorkoutInput = wrapper.find('#new-workout-form input');
-    await newWorkoutInput.setValue(msg);
-    // @ts-ignore
-    const inputElem: HTMLInputElement = newWorkoutInput.element;
-    await newWorkoutInput.trigger('input');
-    expect(inputElem.value).toMatch(msg);
-    const oldLength = wrapper.findAll('.workout-item').length;
-    const addWorkoutForm = wrapper.get('#new-workout-form');
-    await addWorkoutForm.trigger('submit');
-    const newLength = wrapper.findAll('.workout-item').length;
-    expect(newLength).toBe(oldLength + 1);
-    expect(wrapper.text()).toContain(msg);
+  const wrapper = mount(WorkoutList, {
+    global: {
+      plugins: [ElementPlus],
+    },
   });
+  const newWorkoutExample = 'Hello New Workout';
+  it('Adds new workout', async () => {
+
+    // Add Workout
+    const newWorkoutInput = wrapper.find('#new-workout-form input');
+    await newWorkoutInput.setValue(newWorkoutExample);
+    await newWorkoutInput.trigger('input');
+    const oldWorkoutsLength = wrapper.findAll('.workout-item').length;
+    const addWorkoutForm = wrapper.find('#new-workout-form');
+    await addWorkoutForm.trigger('submit');
+    const newWorkoutsLength = wrapper.findAll('.workout-item').length;
+    expect(newWorkoutsLength).toBe(oldWorkoutsLength + 1);
+    expect(wrapper.text()).toContain(newWorkoutExample);
+  });
+  it('Try To Add New Exercise', async() => {
+    const allWorkouts = wrapper.findAll('.workout-item');
+    const lastWorkout = allWorkouts.at(-1);
+    const oldExercisesLen = lastWorkout.findAll('li').length;
+    const newExerciseTitle = 'Hello New Exercise';
+    const newExerciseInput = lastWorkout.find('.new-exercise-form input');
+    await newExerciseInput.setValue(newExerciseTitle);
+    await newExerciseInput.trigger('input');
+    await lastWorkout.find('.new-exercise-form').trigger('submit');
+    const newExercisesLen = lastWorkout.findAll('li').length;
+    expect(lastWorkout.text()).toContain(newExerciseTitle);
+    expect(newExercisesLen).toBe(oldExercisesLen + 1);
+  })
 });

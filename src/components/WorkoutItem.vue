@@ -17,7 +17,7 @@
         @delete-exercise="deleteExercise"
       />
     </ul>
-    <el-form @submit.prevent="addExercise" class="flex-input">
+    <el-form @submit.prevent="addExercise" class="new-exercise-form flex-input">
       <el-form-item>
         <el-input v-model="newExercise" placeholder="Add Exercise" clearable />
       </el-form-item>
