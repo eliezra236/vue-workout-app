@@ -8,11 +8,11 @@
     </template>
     <ul class="exercise-list styleless-ul">
       <ExerciseItem
-        v-for="(exercsie, index) in exercises"
+        v-for="(exercise, index) in exercises"
         :key="index"
         :index="index"
-        :isCompleted="exercsie.isCompleted"
-        :name="exercsie.name"
+        :isCompleted="exercise.isCompleted"
+        :name="exercise.name"
         @change-status="changeExerciseStatus"
         @delete-exercise="deleteExercise"
       />

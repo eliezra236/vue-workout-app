@@ -40,12 +40,16 @@ import IExerciseItemProps from '@/types/IExerciseItemProps';
 const LOCAL_STORAGE_KEY = 'workoutApp.workouts';
 
 const defaultWorkouts: IWorkoutItemProps[] = [
-  { name: 'Click Here For Toturial', isCompleted: false, exercises: [
-    { name: '<-- Mark as Completed', isCompleted: false },
+  {
+    name: 'Click Here For Tutorial',
+    isCompleted: false,
+    exercises: [
+      { name: '<-- Mark as Completed', isCompleted: false },
       { name: 'Delete Exercise -->', isCompleted: false },
       { name: 'Easy, right?', isCompleted: false },
       { name: 'Mark Everything as Completed', isCompleted: false },
-      { name: 'You Completed The Tuturial, have fun :)', isCompleted: false }]},
+      { name: 'You Completed The Tutorial, have fun :)', isCompleted: false }],
+  },
 ];
 
 const getInitialWorkouts = () : IWorkoutItemProps[] => {
@@ -78,7 +82,7 @@ export default defineComponent({
   methods: {
     addWorkout() {
       if (this.newWorkout === '') {
-        alert("Cannot add empty workout");
+        alert('Cannot add empty workout');
         return;
       }
       const newWorkoutInstance: IWorkoutItemProps = {

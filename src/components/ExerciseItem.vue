@@ -1,7 +1,8 @@
 <template>
   <li>
     <el-checkbox :label="name" :checked="isCompleted" @change="changeCompleted"></el-checkbox>
-    <el-button class="delete-exercise-btn" @click="deleteExercise" type="danger" size="mini" :icon="Delete" circle></el-button>
+    <el-button class="delete-exercise-btn" type="danger" size="mini"
+               :icon="Delete" @click="deleteExercise" circle></el-button>
   </li>
 </template>
 
