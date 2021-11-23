@@ -47,7 +47,7 @@
       "ecmaVersion": 2020
     },
     "rules": {
-      "linebreak-style": ["error", "windows"]
+      "linebreak-style": 0
     },
     "overrides": [
       {

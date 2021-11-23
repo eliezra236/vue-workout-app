@@ -25,9 +25,9 @@
         <el-button type="success" @click="addWorkout">+</el-button>
       </el-form-item>
     </el-form>
-
-    <a href="#" id="reset-to-default-btn" @click="resetToDefault">Delete All Workouts (Reset to Default)</a>
-
+    <a href="#" id="reset-to-default-btn" @click="resetToDefault">
+      Delete All Workouts (Reset to Default)</a>
+    <test-item></test-item>
   </div>
 </template>
 
@@ -36,6 +36,7 @@ import { defineComponent } from 'vue';
 import WorkoutItem from './WorkoutItem.vue';
 import IWorkoutItemProps from '@/types/IWorkoutItemProps';
 import IExerciseItemProps from '@/types/IExerciseItemProps';
+import TestItem from "@/components/testItem.vue";
 
 const LOCAL_STORAGE_KEY = 'workoutApp.workouts';
 
@@ -78,13 +79,13 @@ export default defineComponent({
       deep: true,
     },
   },
-  components: { WorkoutItem },
+  components: {TestItem, WorkoutItem },
   methods: {
     addWorkout() {
-      if (this.newWorkout === '') {
-        alert('Cannot add empty workout');
-        return;
-      }
+      // if (this.newWorkout === '') {
+      //   alert('Cannot add empty workout');
+      //   return;
+      // }
       const newWorkoutInstance: IWorkoutItemProps = {
         isCompleted: false, exercises: [], name: this.newWorkout,
       };
