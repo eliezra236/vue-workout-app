@@ -84,7 +84,6 @@ export default defineComponent({
     },
     deleteWorkout() {
       this.$emit('delete-workout', this.index);
-      console.log('here');
     },
   },
   components: {

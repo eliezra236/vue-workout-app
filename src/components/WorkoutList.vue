@@ -27,7 +27,6 @@
     </el-form>
     <a href="#" id="reset-to-default-btn" @click="resetToDefault">
       Delete All Workouts (Reset to Default)</a>
-    <test-item></test-item>
   </div>
 </template>
 
@@ -36,7 +35,6 @@ import { defineComponent } from 'vue';
 import WorkoutItem from './WorkoutItem.vue';
 import IWorkoutItemProps from '@/types/IWorkoutItemProps';
 import IExerciseItemProps from '@/types/IExerciseItemProps';
-import TestItem from "@/components/testItem.vue";
 
 const LOCAL_STORAGE_KEY = 'workoutApp.workouts';
 
@@ -79,7 +77,7 @@ export default defineComponent({
       deep: true,
     },
   },
-  components: {TestItem, WorkoutItem },
+  components: { WorkoutItem },
   methods: {
     addWorkout() {
       // if (this.newWorkout === '') {
@@ -109,12 +107,14 @@ export default defineComponent({
       workout.exercises.splice(exerciseIndex, 1);
     },
     updateWorkoutStatus(workout: IWorkoutItemProps): void {
+      // eslint-disable-next-line no-param-reassign
       workout.isCompleted = this.isWorkoutCompleted(workout);
     },
     isWorkoutCompleted(workout: IWorkoutItemProps): boolean {
       if (workout.exercises.length === 0) {
         return false;
       }
+      // eslint-disable-next-line no-restricted-syntax
       for (const exercise of workout.exercises) {
         if (!exercise.isCompleted) {
           return false;
@@ -123,6 +123,7 @@ export default defineComponent({
       return true;
     },
     resetToDefault() {
+      // eslint-disable-next-line no-restricted-globals
       const sure = confirm('Are you sure you want to delete all exercises? this action is irreversible');
       if (sure) {
         this.workouts = defaultWorkouts;

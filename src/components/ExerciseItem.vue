@@ -37,6 +37,7 @@ export default defineComponent({
 });
 </script>
 <script setup lang="ts">
+// eslint-disable-next-line
 import { Delete } from '@element-plus/icons';
 
 </script>
